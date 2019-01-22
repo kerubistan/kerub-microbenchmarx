@@ -1,6 +1,9 @@
 package com.github.kerubistan.kerub.serialization
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.github.kerubistan.kerub.benchmarkutils.random
+import com.github.kerubistan.kerub.benchmarkutils.randomItem
+import com.github.kerubistan.kerub.benchmarkutils.randomItems
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.serialization.ImplicitReflectionSerializer
@@ -10,7 +13,6 @@ import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.Scope
 import org.openjdk.jmh.annotations.State
 import org.openjdk.jmh.infra.Blackhole
-import java.util.Random
 
 @State(Scope.Benchmark)
 open class SerializationBenchmark {
@@ -18,14 +20,8 @@ open class SerializationBenchmark {
 	val firstNames = listOf("John", "Bill", "George", "Barack", "Donald", "Hillary")
 	val lastNames = listOf("Travolta", "Clinton", "Bush", "Obama", "Pump", "McCain")
 
-	val random = Random()
-
 	val titles = listOf("Sir", "Dr", "Saint", "Ninja")
 
-	fun <T> Random.randomItem(items : List<T>) : T = items[this.nextInt(items.size - 1)]
-
-	fun <T> Random.randomItems(items : List<T>) : List<T> = (1..this.nextInt(items.size))
-			.map { items[this.nextInt(items.size - 1)] }.toSet().toList()
 
 	val people = (1..10000).map {
 		Person(
