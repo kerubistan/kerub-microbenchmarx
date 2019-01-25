@@ -2,6 +2,8 @@ package com.github.kerubistan.kerub.planner.scenarios
 
 import com.github.kerubistan.kerub.common.testHost
 import com.github.kerubistan.kerub.common.testVm
+import com.github.kerubistan.kerub.model.Host
+import com.github.kerubistan.kerub.model.VirtualMachine
 import com.github.kerubistan.kerub.model.VirtualMachineStatus
 import com.github.kerubistan.kerub.model.collection.HostDataCollection
 import com.github.kerubistan.kerub.model.collection.VirtualMachineDataCollection
@@ -64,7 +66,6 @@ fun OperationalState.withHostPubKeysInstalled(fromRange: IntRange, toRange: IntR
 		}.associateBy { it.id }
 )
 
-
 fun OperationalState.withWms(nr: Int) = this.copy(
 		vms = (1..nr).map { vmNr ->
 			VirtualMachineDataCollection(
@@ -77,15 +78,30 @@ fun OperationalState.withWms(nr: Int) = this.copy(
 		}.associateBy { it.id }
 )
 
+fun OperationalState.withRunningWm(vm: VirtualMachine) = this.copy(
+		vms = (this.vms.values + VirtualMachineDataCollection(
+				stat = vm,
+				dynamic = VirtualMachineDynamic(
+						id = vm.id,
+						hostId = this.runningHosts.first().id,
+						memoryUsed = vm.memory.max,
+						status = VirtualMachineStatus.Up
+				))
+				).associateBy { it.id }
+)
 
-fun OperationalState.withVmsUp(range: IntRange) = this.copy(
+
+fun OperationalState.withVmsUp(
+		range: IntRange,
+		hosts: List<Host> = this.runningHosts.map { it.stat }
+): OperationalState = this.copy(
 		vms = vms.values.sortedBy { it.stat.name }.mapIndexed { idx, item ->
 			if (idx in range) item.copy(
 					dynamic = VirtualMachineDynamic(
 							id = item.id,
 							status = VirtualMachineStatus.Up,
 							memoryUsed = BigInteger((1024.toLong() * 1024.toLong() * 1024.toLong()).toString()),
-							hostId = TODO()
+							hostId = hosts[idx % hosts.size].id
 					)
 			) else item
 		}.associateBy { it.id }
