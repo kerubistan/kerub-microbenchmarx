@@ -1,0 +1,10 @@
+<configuration>
+
+	<appender name="NOP" class="ch.qos.logback.core.helpers.NOPAppender">
+	</appender>
+
+	<root level="warning">
+		<appender-ref ref="NOP" />
+	</root>
+
+</configuration>
