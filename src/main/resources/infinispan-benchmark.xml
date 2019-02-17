@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<infinispan
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="urn:infinispan:config:8.2 http://www.infinispan.org/schemas/infinispan-config-8.2.xsd"
+		xmlns="urn:infinispan:config:8.2">
+
+	<jgroups>
+		<stack-file name="udp" path="default-configs/default-jgroups-udp.xml"/>
+	</jgroups>
+
+	<cache-container default-cache="default" statistics="true">
+		<transport stack="udp"/>
+		<jmx
+				domain="org.infinispan"
+				duplicate-domains="true"
+				mbean-server-lookup="org.infinispan.jmx.PlatformMBeanServerLookup"/>
+
+		<local-cache name="local-cache">
+
+		</local-cache>
+
+		<local-cache name="local-cache-persistent">
+			<persistence>
+				<file-store path="/tmp/local-cache"/>
+			</persistence>
+		</local-cache>
+
+
+	</cache-container>
+</infinispan>
