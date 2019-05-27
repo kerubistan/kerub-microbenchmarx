@@ -83,7 +83,7 @@ fun OperationalState.withRunningWm(vm: VirtualMachine) = this.copy(
 				stat = vm,
 				dynamic = VirtualMachineDynamic(
 						id = vm.id,
-						hostId = this.runningHosts.first().id,
+						hostId = this.index.runningHosts.first().id,
 						memoryUsed = vm.memory.max,
 						status = VirtualMachineStatus.Up
 				))
@@ -93,7 +93,7 @@ fun OperationalState.withRunningWm(vm: VirtualMachine) = this.copy(
 
 fun OperationalState.withVmsUp(
 		range: IntRange,
-		hosts: List<Host> = this.runningHosts.map { it.stat }
+		hosts: List<Host> = this.index.runningHosts.map { it.stat }
 ): OperationalState = this.copy(
 		vms = vms.values.sortedBy { it.stat.name }.mapIndexed { idx, item ->
 			if (idx in range) item.copy(

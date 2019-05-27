@@ -27,13 +27,13 @@ open class StopVirtualMachineBenchmark {
 			.withVmsUp(1..512)
 
 	val tinyStep = StopVirtualMachine(
-			host = tinyState.hosts[tinyState.runningVms.first().dynamic!!.hostId]!!.stat,
-			vm = tinyState.runningVms.first().stat
+			host = tinyState.hosts[tinyState.index.runningVms.first().dynamic!!.hostId]!!.stat,
+			vm = tinyState.index.runningVms.first().stat
 	)
 
 	val smallStep = KvmStartVirtualMachine(
-			host = smallState.hosts[smallState.runningVms.first().dynamic!!.hostId]!!.stat,
-			vm = smallState.runningVms.first().stat
+			host = smallState.hosts[smallState.index.runningVms.first().dynamic!!.hostId]!!.stat,
+			vm = smallState.index.runningVms.first().stat
 	)
 
 	@Benchmark

@@ -27,12 +27,12 @@ open class KvmStartVirtualMachineBenchmark {
 			.withRunningWm(testVm)
 
 	val tinyStep = KvmStartVirtualMachine(
-			host = tinyState.runningHosts.first().stat,
+			host = tinyState.index.runningHosts.first().stat,
 			vm = testVm
 	)
 
 	val smallStep = KvmStartVirtualMachine(
-			host = smallState.runningHosts.first().stat,
+			host = smallState.index.runningHosts.first().stat,
 			vm = testVm
 	)
 

@@ -1,5 +1,6 @@
 package com.github.kerubistan.kerub.utils
 
+import io.github.kerubistan.kroki.strings.substringBetween
 import org.openjdk.jmh.annotations.Benchmark
 import org.openjdk.jmh.annotations.Scope
 import org.openjdk.jmh.annotations.State
