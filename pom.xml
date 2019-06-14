@@ -64,7 +64,7 @@
 
         <javac.target>1.8</javac.target>
 
-        <kotlin.version>1.3.10</kotlin.version>
+        <kotlin.version>1.3.21</kotlin.version>
 
         <serialization.version>0.9.0</serialization.version>
 
@@ -97,9 +97,11 @@
                             <sourceDirs>
                                 <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
                             </sourceDirs>
+                            <!--
                             <compilerPlugins>
                                 <plugin>kotlinx-serialization</plugin>
                             </compilerPlugins>
+                            -->
                         </configuration>
                     </execution>
 
@@ -112,6 +114,7 @@
                     </execution>
 
                 </executions>
+                <!--
                 <dependencies>
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
@@ -119,6 +122,7 @@
                         <version>${kotlin.version}</version>
                     </dependency>
                 </dependencies>
+                -->
             </plugin>
 
             <plugin>
